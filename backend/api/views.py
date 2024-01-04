@@ -7,12 +7,11 @@ from products.serializers import ProductSerializer
 
 
 # this makes it drf api view!
-@api_view(['GET'])
+@api_view(['POST'])
 def api_home(request, *args, **kwargs):
     
-    instance = Product.objects.all().order_by("?").first()
-    data={}
-    if instance:
-         data = ProductSerializer(instance).data
-
-    return Response(data)
+    serializer = ProductSerializer(request.data)
+    if(serializer.is_valid):
+         print(serializer.data)
+         data = serializer.data
+         return Response(data)
