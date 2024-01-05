@@ -13,8 +13,11 @@ class ProductCreateAPIView(generics.CreateAPIView):
         content = serializer.validated_data.get('content') or None
         if content is None:
             content = title 
+        price = serializer.validated_data.get('price')
+        if price is None:
+            price=2.99
 
-        serializer.save(price=1.99, content=content)
+        serializer.save(price=price, content=content)
 
         
 
