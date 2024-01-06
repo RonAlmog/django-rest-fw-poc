@@ -30,6 +30,20 @@ class ProductDetailAPIView(generics.RetrieveAPIView):
 
 product_detail_view = ProductDetailAPIView.as_view()
 
+
+class ProductUpdateAPIView(generics.UpdateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    lookup_field = 'pk'
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        if not instance.content:
+            instance.content = instance.title
+        
+
+product_update_view = ProductUpdateAPIView.as_view()
+
 class ProductListAPIView(generics.ListAPIView):
     # not going to use this
     queryset = Product.objects.all()
